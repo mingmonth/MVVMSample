@@ -22,13 +22,16 @@ class AuthViewModel : ViewModel() {
         Coroutines.main {
             val response = UserRepository().userLogin(email!!, password!!)
             if(response.isSuccessful) {
-                authListener?.onSuccess(response.body()?.user!!)
+                var isError: Boolean = response.body()?.error!!
+                if(isError) {
+                    authListener?.onFailure("Error Code: ${response.code()}")
+                } else {
+                    authListener?.onSuccess(response.body()?.user!!)
+                }
             } else {
                 authListener?.onFailure("Error Code: ${response.code()}")
             }
         }
-
-
 
         //authListener?.onSuccess()
 //        val loginResponse = UserRepository().userLogin(email!!, password!!)
