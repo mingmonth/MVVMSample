@@ -20,6 +20,14 @@ interface MyApi {
         @Field("password") password: String
     ) : Response<AuthResponse>
 
+    @FormUrlEncoded
+    @POST("userSignup.php")
+    suspend fun userSignup(
+        @Field("username") username: String,
+        @Field("password") password: String,
+        @Field("email") email: String
+    ) : Response<AuthResponse>
+
     companion object {
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor

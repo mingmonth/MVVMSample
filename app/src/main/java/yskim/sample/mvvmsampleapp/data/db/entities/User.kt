@@ -11,6 +11,6 @@ data class User(
     var password: String? = null,
     var email: String? = null
 ) {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = false)
     var id: Int = CURRENT_USER_ID
 }

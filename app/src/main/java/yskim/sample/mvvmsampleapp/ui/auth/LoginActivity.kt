@@ -11,11 +11,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import yskim.sample.mvvmsampleapp.R
-import yskim.sample.mvvmsampleapp.data.db.AppDatabase
 import yskim.sample.mvvmsampleapp.data.db.entities.User
-import yskim.sample.mvvmsampleapp.data.network.MyApi
-import yskim.sample.mvvmsampleapp.data.network.NetworkConnectionInterceptor
-import yskim.sample.mvvmsampleapp.data.repositories.UserRepository
 import yskim.sample.mvvmsampleapp.databinding.ActivityLoginBinding
 import yskim.sample.mvvmsampleapp.ui.home.HomeActivity
 import yskim.sample.mvvmsampleapp.util.hide
