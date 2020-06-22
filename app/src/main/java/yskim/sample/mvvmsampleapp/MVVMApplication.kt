@@ -13,6 +13,7 @@ import yskim.sample.mvvmsampleapp.data.network.MyApi
 import yskim.sample.mvvmsampleapp.data.network.NetworkConnectionInterceptor
 import yskim.sample.mvvmsampleapp.data.repositories.UserRepository
 import yskim.sample.mvvmsampleapp.ui.auth.AuthViewModelFactory
+import yskim.sample.mvvmsampleapp.ui.home.profile.ProfileViewModelFactory
 
 class MVVMApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
@@ -22,5 +23,6 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from singleton{ AppDatabase(instance())}
         bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { ProfileViewModelFactory(instance()) }
     }
 }
