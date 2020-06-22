@@ -7,6 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 import yskim.sample.mvvmsampleapp.R
 import yskim.sample.mvvmsampleapp.data.db.AppDatabase
 import yskim.sample.mvvmsampleapp.data.db.entities.User
@@ -19,15 +22,20 @@ import yskim.sample.mvvmsampleapp.util.hide
 import yskim.sample.mvvmsampleapp.util.show
 import yskim.sample.mvvmsampleapp.util.snackbar
 
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
+
+    override val kodein by kodein()
+    //private val factory : AuthViewModelFactory by instance<AuthViewModelFactory>()
+    private val factory : AuthViewModelFactory by instance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-        val api = MyApi(networkConnectionInterceptor)
-        val db = AppDatabase(this)
-        val repository = UserRepository(api, db)
-        val factory = AuthViewModelFactory(repository)
+//        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+//        val api = MyApi(networkConnectionInterceptor)
+//        val db = AppDatabase(this)
+//        val repository = UserRepository(api, db)
+//        val factory = AuthViewModelFactory(repository)
 
         //setContentView(R.layout.activity_login)
         val binding : ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
