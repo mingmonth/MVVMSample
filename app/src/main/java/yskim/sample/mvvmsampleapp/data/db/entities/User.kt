@@ -3,7 +3,7 @@ package yskim.sample.mvvmsampleapp.data.db.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-const val CURRENT_USER_ID = 0
+const val CURRENT_USER_ID = 1
 
 @Entity
 data class User(
