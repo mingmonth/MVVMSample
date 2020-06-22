@@ -3,6 +3,7 @@ package yskim.sample.mvvmsampleapp.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import yskim.sample.mvvmsampleapp.data.repositories.UserRepository
+import yskim.sample.mvvmsampleapp.util.ApiException
 import yskim.sample.mvvmsampleapp.util.Coroutines
 
 class AuthViewModel : ViewModel() {
@@ -20,17 +21,30 @@ class AuthViewModel : ViewModel() {
 
         // success
         Coroutines.main {
-            val response = UserRepository().userLogin(email!!, password!!)
-            if(response.isSuccessful) {
-                var isError: Boolean = response.body()?.error!!
-                if(isError) {
-                    authListener?.onFailure("Error Code: ${response.code()}")
-                } else {
-                    authListener?.onSuccess(response.body()?.user!!)
+            try {
+                val authResponse = UserRepository().userLogin(email!!, password!!)
+
+                authResponse.user?.let {
+                    authListener?.onSuccess(it)
+                    return@main
                 }
-            } else {
-                authListener?.onFailure("Error Code: ${response.code()}")
+                authListener?.onFailure(authResponse.message!!)
+            } catch (e: ApiException) {
+                authListener?.onFailure(e.message!!)
             }
+
+//            val response = UserRepository().userLogin(email!!, password!!)
+//            if(response.isSuccessful) {
+//                var isError: Boolean = response.body()?.error!!
+//                if(isError) {
+//                    //authListener?.onFailure("Error Code: ${response.code()}")
+//                    authListener?.onFailure(response.body()?.message!!)
+//                } else {
+//                    authListener?.onSuccess(response.body()?.user!!)
+//                }
+//            } else {
+//                authListener?.onFailure("Error Code: ${response.code()}")
+//            }
         }
 
         //authListener?.onSuccess()

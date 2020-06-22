@@ -13,6 +13,7 @@ import yskim.sample.mvvmsampleapp.data.db.entities.User
 import yskim.sample.mvvmsampleapp.databinding.ActivityLoginBinding
 import yskim.sample.mvvmsampleapp.util.hide
 import yskim.sample.mvvmsampleapp.util.show
+import yskim.sample.mvvmsampleapp.util.snackbar
 import yskim.sample.mvvmsampleapp.util.toast
 
 class LoginActivity : AppCompatActivity(), AuthListener {
@@ -36,7 +37,9 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onSuccess(user: User) {
         progress_bar.hide()
-        toast("${user.username} is Logged In")
+
+        root_layout.snackbar("${user.username} is Logged In")
+        //toast("${user.username} is Logged In")
     }
 //    override fun onSuccess(loginResponse: LiveData<String>) {
 //        //toast("Login Success");
@@ -46,6 +49,7 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onFailure(message: String) {
         progress_bar.hide()
-        toast(message);
+        root_layout.snackbar(message)
+//        toast(message);
     }
 }
