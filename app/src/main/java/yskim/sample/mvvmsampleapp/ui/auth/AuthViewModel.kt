@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import yskim.sample.mvvmsampleapp.data.repositories.UserRepository
 import yskim.sample.mvvmsampleapp.util.ApiException
 import yskim.sample.mvvmsampleapp.util.Coroutines
+import yskim.sample.mvvmsampleapp.util.NoInternetException
 
 class AuthViewModel(
     private val repository: UserRepository
@@ -36,6 +37,8 @@ class AuthViewModel(
                 }
                 authListener?.onFailure(authResponse.message!!)
             } catch (e: ApiException) {
+                authListener?.onFailure(e.message!!)
+            } catch (e: NoInternetException) {
                 authListener?.onFailure(e.message!!)
             }
 
