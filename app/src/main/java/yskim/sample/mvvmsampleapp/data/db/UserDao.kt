@@ -12,7 +12,7 @@ import yskim.sample.mvvmsampleapp.data.db.entities.User
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(user: User) : Long
+    suspend fun upsert(user: User) : Long
 
     @Query("SELECT * FROM user WHERE id = $CURRENT_USER_ID")
     fun getUser() : LiveData<User>

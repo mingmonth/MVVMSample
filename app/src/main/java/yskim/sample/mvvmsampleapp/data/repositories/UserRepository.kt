@@ -1,14 +1,23 @@
 package yskim.sample.mvvmsampleapp.data.repositories
 
 import retrofit2.Response
+import yskim.sample.mvvmsampleapp.data.db.AppDatabase
+import yskim.sample.mvvmsampleapp.data.db.entities.User
 import yskim.sample.mvvmsampleapp.data.network.MyApi
 import yskim.sample.mvvmsampleapp.data.network.SafeApiRequest
 import yskim.sample.mvvmsampleapp.data.network.responses.AuthResponse
 
-class UserRepository : SafeApiRequest() {
+class UserRepository(
+    private val api : MyApi,
+    private val db: AppDatabase
+) : SafeApiRequest() {
+
+    suspend fun saveUser(user: User) = db.getUserDao().upsert(user)
+
+    fun getUser() = db.getUserDao().getUser()
 
     suspend fun userLogin(email: String, password: String) : AuthResponse {
-        return apiRequest { MyApi().userLogin(email, password) }
+        return apiRequest { api.userLogin(email, password) }
 //    suspend fun userLogin(email: String, password: String) : Response<AuthResponse> {
 //        return MyApi().userLogin(email, password)
 //        val loginResponse = MutableLiveData<String>()
