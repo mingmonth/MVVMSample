@@ -11,9 +11,11 @@ import org.kodein.di.generic.singleton
 import yskim.sample.mvvmsampleapp.data.db.AppDatabase
 import yskim.sample.mvvmsampleapp.data.network.MyApi
 import yskim.sample.mvvmsampleapp.data.network.NetworkConnectionInterceptor
+import yskim.sample.mvvmsampleapp.data.repositories.QuotesRepository
 import yskim.sample.mvvmsampleapp.data.repositories.UserRepository
 import yskim.sample.mvvmsampleapp.ui.auth.AuthViewModelFactory
 import yskim.sample.mvvmsampleapp.ui.home.profile.ProfileViewModelFactory
+import yskim.sample.mvvmsampleapp.ui.home.quotes.QuotesViewModelFactory
 
 class MVVMApplication : Application(), KodeinAware {
     override val kodein = Kodein.lazy {
@@ -22,7 +24,9 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from singleton{ MyApi(instance()) }
         bind() from singleton{ AppDatabase(instance())}
         bind() from singleton { UserRepository(instance(), instance()) }
+        bind() from singleton { QuotesRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
+        bind() from provider { QuotesViewModelFactory(instance()) }
     }
 }

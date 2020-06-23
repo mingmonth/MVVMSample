@@ -8,8 +8,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.GET
 import retrofit2.http.POST
 import yskim.sample.mvvmsampleapp.data.network.responses.AuthResponse
+import yskim.sample.mvvmsampleapp.data.network.responses.QuotesResponse
 
 interface MyApi {
 
@@ -27,6 +29,9 @@ interface MyApi {
         @Field("password") password: String,
         @Field("email") email: String
     ) : Response<AuthResponse>
+
+    @GET("quotes.php")
+    suspend fun getQuotes() : Response<QuotesResponse>
 
     companion object {
         operator fun invoke(
