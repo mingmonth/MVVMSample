@@ -8,11 +8,17 @@ import yskim.sample.mvvmsampleapp.data.db.AppDatabase
 import yskim.sample.mvvmsampleapp.data.db.entities.Quote
 import yskim.sample.mvvmsampleapp.data.network.MyApi
 import yskim.sample.mvvmsampleapp.data.network.SafeApiRequest
+import yskim.sample.mvvmsampleapp.data.preference.PreferenceProvider
 import yskim.sample.mvvmsampleapp.util.Coroutines
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+
+private val MINIMUMM_INTERVAL = 6
 
 class QuotesRepository(
     private val api: MyApi,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val prefs: PreferenceProvider
 ) : SafeApiRequest() {
 
     private val quotes = MutableLiveData<List<Quote>> ()
@@ -31,7 +37,9 @@ class QuotesRepository(
     }
 
     private suspend fun fetchQuotes() {
-        if(isFetchNeeded()){
+        val lastSavedAt = prefs.getLastSavedAt()
+
+        if(lastSavedAt == null || isFetchNeeded(LocalDateTime.parse(lastSavedAt))){
             val response = apiRequest {
                 api.getQuotes()
             }
@@ -39,12 +47,13 @@ class QuotesRepository(
         }
     }
 
-    private fun isFetchNeeded() : Boolean {
-        return true
+    private fun isFetchNeeded(savedAt: LocalDateTime): Boolean {
+        return ChronoUnit.HOURS.between(savedAt, LocalDateTime.now()) > MINIMUMM_INTERVAL
     }
 
     private fun saveQuotes(quotes: List<Quote>) {
         Coroutines.io {
+            prefs.saveLastSavedAt(LocalDateTime.now().toString())
             db.getQuoteDao().saveAllQuotes(quotes)
         }
     }
