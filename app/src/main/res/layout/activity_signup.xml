@@ -5,15 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-    <data>
-
-        <variable
-            name="viewmodel"
-            type="yskim.sample.mvvmsampleapp.ui.auth.AuthViewModel"
-            />
-
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/signup_root_layout"
         android:layout_width="match_parent"
@@ -72,7 +63,6 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:text="@={viewmodel.username}"
                     android:id="@+id/edit_text_name"
                     android:hint="Belal Khan"
                     android:inputType="text"
@@ -85,7 +75,6 @@
                     android:layout_height="match_parent"/>
 
                 <EditText
-                    android:text="@={viewmodel.email}"
                     android:id="@+id/edit_text_email"
                     android:hint="belal@gmail.com"
                     android:inputType="textEmailAddress"
@@ -98,7 +87,6 @@
                     android:layout_height="match_parent"/>
 
                 <EditText
-                    android:text="@={viewmodel.password}"
                     android:id="@+id/edit_text_password"
                     android:inputType="textPassword"
                     android:hint="password"
@@ -111,7 +99,6 @@
                     android:layout_height="match_parent"/>
 
                 <EditText
-                    android:text="@={viewmodel.passwordconfirm}"
                     android:id="@+id/edit_text_password_confirm"
                     android:inputType="textPassword"
                     android:hint="confirm password"
@@ -137,7 +124,6 @@
                     android:layout_gravity="center_horizontal"
                     android:textAllCaps="false"
                     android:text="Sign Up"
-                    android:onClick="@{viewmodel::onSignupButtonClick}"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"/>
 
@@ -151,7 +137,6 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:layout_below="@id/linearLayout2"
                 android:textAlignment="center"
-                android:onClick="@{viewmodel::onLogin}"
                 android:text="Already have an account?\nSign in Here"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
